@@ -1,14 +1,14 @@
 import {combineReducers} from 'redux';
-import movieList from './movieList';
-import movieEdit from "./movieEdit";
-import movieDetails from "./movieDetails";
-import sort from "./sort";
-import filter from "./filter";
+import movieListReducer from './movieListReducer';
+import movieEditReducer from "./movieEditReducer";
+import movieDetailsReducer from "./movieDetailsReducer";
+import sortReducer from "./sortReducer";
+import filterReducer from "./filterReducer";
 
 export default combineReducers({
-    movieList,
-    movieEdit,
-    movieDetails,
-    sort,
-    filter,
+    movieList: movieListReducer,
+    movieEdit: movieEditReducer,
+    movieDetails: movieDetailsReducer,
+    sort: sortReducer,
+    filter: filterReducer,
 });

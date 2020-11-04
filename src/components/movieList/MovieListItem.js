@@ -1,12 +1,19 @@
 import React from 'react';
-import {connect} from "react-redux";
-import {startEditMovieAction, deleteMovieAction, showDetailMovieAction} from "../../actions";
+import {useDispatch} from "react-redux";
 import styles from '../../css/styles.module.css';
+import {callDeleteMovie} from "../../server/serverCalls";
+import {showMovieDetailsAction, startEditMovieAction} from "../../actions/movieActions";
 
-const MovieListItem = ({item, ...props}) => {
+const MovieListItem = ({item}) => {
+    const dispatch = useDispatch();
+
+    const showDetailsHandler = () => dispatch(showMovieDetailsAction(item));
+    const startEditMovieHandler = () => dispatch(startEditMovieAction(item));
+    const deleteMovieHandler = () => callDeleteMovie(item, dispatch);
+
     return (
         <div style={{display: 'inline-block', padding: '20px'}}>
-            <div onClick={() => {props.showDetailMovieAction(item)}} style={{cursor: 'pointer'}}>
+            <div onClick={showDetailsHandler} style={{cursor: 'pointer'}}>
                 <img alt='movie' src={item.url} style={{width: '300px', height: '450px'}}/><br/>
 
                 <span>{item.title}</span><br/>
@@ -14,19 +21,13 @@ const MovieListItem = ({item, ...props}) => {
                 <span>{item.genre}</span><br/>
             </div>
 
-            <button onClick={() => {props.startUpdateMovieAction(item)}}>Edit</button>
+            <button onClick={startEditMovieHandler}>Edit</button>
 
             <div className={styles.gap20}/>
 
-            <button onClick={() => {props.deleteMovieAction(item)}}>Delete</button>
+            <button onClick={deleteMovieHandler}>Delete</button>
         </div>
     )
 }
 
-const mapDispatchToProps = dispatch => ({
-    startUpdateMovieAction: item => dispatch(startEditMovieAction(item)),
-    deleteMovieAction: item => dispatch(deleteMovieAction(item)),
-    showDetailMovieAction: item => dispatch(showDetailMovieAction(item)),
-});
-
-export default connect(null, mapDispatchToProps)(MovieListItem);
+export default MovieListItem;

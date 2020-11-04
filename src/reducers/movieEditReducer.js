@@ -1,10 +1,10 @@
-import {CANCEL_EDIT_MOVIE, START_ADD_MOVIE, START_EDIT_MOVIE} from "../actions";
+import {CANCEL_EDIT_MOVIE, START_ADD_MOVIE, START_EDIT_MOVIE} from "../actions/movieActions";
 
 function getNewMovie() {
-    return {id: null, title: '', overview: '', releaseDate: '', genre: '', runtime: '', url: ''};
+    return {id: '', title: '', overview: '', releaseDate: '', genre: '', runtime: '', url: ''};
 }
 
-const movieEdit = (state = null, action) => {
+const movieEditReducer = (state = null, action) => {
     switch (action.type) {
         case START_ADD_MOVIE:
             return getNewMovie();
@@ -17,4 +17,4 @@ const movieEdit = (state = null, action) => {
     }
 };
 
-export default movieEdit;
+export default movieEditReducer;

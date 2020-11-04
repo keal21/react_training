@@ -1,27 +1,29 @@
 import React from 'react';
-import {connect} from "react-redux";
-import {selectSortAction} from "../../actions";
+import {useDispatch, useSelector} from "react-redux";
 import styles from "../../css/styles.module.css";
+import {selectSortAction} from "../../actions/sortActions";
 
-const Sort = props => (
-    <div style={{display: 'inline-block', padding: '20px'}}>
-        <span>Sort by</span>
-        <div className={styles.gap20}/>
-        <select onChange={(e) => props.selectSortAction(e.target.value)}>
-            {props.list.map(item => (
-                <option key={item.field} value={item.field}>{item.name}</option>
-            ))}
-        </select>
-    </div>
-)
+const Sort = () => {
+    const dispatch = useDispatch();
+    const list = useSelector(state => state.sort.list);
 
-const mapStateToProps = state => ({
-    list: state.sort.list,
-    selectedValue: state.sort.selectedValue,
-});
+    const onChangeHandler = (e) => {
+        dispatch(selectSortAction(e.target.value));
+    }
 
-const mapDispatchToProps = dispatch => ({
-    selectSortAction: item => dispatch(selectSortAction(item)),
-});
+    return (
+        <div style={{display: 'inline-block', padding: '20px'}}>
+            <span>Sort by</span>
 
-export default connect(mapStateToProps, mapDispatchToProps)(Sort);
+            <div className={styles.gap20}/>
+
+            <select onChange={onChangeHandler}>
+                {list.map(item => (
+                    <option key={item.value} value={item.value}>{item.name}</option>
+                ))}
+            </select>
+        </div>
+    );
+};
+
+export default Sort;

@@ -1,9 +1,14 @@
 import React from 'react';
-import {connect} from "react-redux";
-import {cancelDetailMovieAction} from "../../actions";
+import {useDispatch, useSelector} from "react-redux";
 import Popup from "../system/Popup";
+import {closeMovieDetailsAction} from "../../actions/movieActions";
 
-function MovieDetails({item, ...props}) {
+const MovieDetails = () => {
+    const dispatch = useDispatch();
+    const item = useSelector(state => state.movieDetails);
+
+    const cancelHandler = () => dispatch(closeMovieDetailsAction());
+
     return (
         <Popup>
             <div style={{minWidth: '600px'}}>
@@ -22,17 +27,9 @@ function MovieDetails({item, ...props}) {
 
             <p/>
 
-            <button onClick={props.cancelDetailMovieAction}>Close</button>
+            <button onClick={cancelHandler}>Close</button>
         </Popup>
     );
 }
 
-const mapStateToProps = state => ({
-    item: state.movieDetails,
-});
-
-const mapDispatchToProps = dispatch => ({
-    cancelDetailMovieAction: () => dispatch(cancelDetailMovieAction()),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(MovieDetails);
+export default MovieDetails;

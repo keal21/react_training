@@ -1,27 +1,29 @@
 import React from 'react';
-import {connect} from "react-redux";
-import {selectFilterAction} from "../../actions";
+import {useDispatch, useSelector} from "react-redux";
 import styles from "../../css/styles.module.css";
+import {selectFilterAction} from "../../actions/filterActions";
 
-const Filter = props => (
-    <div style={{display: 'inline-block', padding: '20px'}}>
-        <span>Filter by</span>
-        <div className={styles.gap20}/>
-        <select onChange={(e) => props.selectFilterAction(e.target.value)}>
-            {props.list.map(item => (
-                <option key={item} value={item}>{item}</option>
-            ))}
-        </select>
-    </div>
-)
+const Filter = () => {
+    const dispatch = useDispatch();
+    const list = useSelector(state => state.filter.list);
 
-const mapStateToProps = state => ({
-    list: state.filter.list,
-    selectedValue: state.filter.selectedValue,
-});
+    const onChangeHandler = (e) => {
+        dispatch(selectFilterAction(e.target.value));
+    }
 
-const mapDispatchToProps = dispatch => ({
-    selectFilterAction: item => dispatch(selectFilterAction(item)),
-});
+    return (
+        <div style={{display: 'inline-block', padding: '20px'}}>
+            <span>Filter by</span>
 
-export default connect(mapStateToProps, mapDispatchToProps)(Filter);
+            <div className={styles.gap20}/>
+
+            <select onChange={onChangeHandler}>
+                {list.map(item => (
+                    <option key={item.value} value={item.value}>{item.name}</option>
+                ))}
+            </select>
+        </div>
+    );
+};
+
+export default Filter;

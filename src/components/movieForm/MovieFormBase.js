@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {connect} from "react-redux";
 import Popup from "../system/Popup";
-import {cancelEditMovieAction} from "../../actions";
 import styles from '../../css/styles.module.css';
+import {cancelEditMovieAction} from "../../actions/movieActions";
 
 const MovieFormBase = ({title, ...props}) => {
     const [item, setItem] = useState({...props.source});

@@ -1,31 +1,29 @@
-import React from "react";
-import {connect} from 'react-redux';
+import React, {useEffect} from "react";
+import {useDispatch, useSelector} from 'react-redux';
 import MovieListItem from "./MovieListItem";
+import {callGetMovieList} from "../../server/serverCalls";
 
-const MovieList = ({movieList}) => (
-    <>
-        {movieList.map(item => (
-            <MovieListItem key={item.id} item={item}/>
-        ))}
-    </>
-)
+const MovieList = () => {
+    const dispatch = useDispatch();
 
-function getList(source, sort, filter) {
-    let result = source.concat();
+    const filter = useSelector(state => state.filter.selectedValue);
+    const sort = useSelector(state => state.sort.selectedValue);
+    const movieList = useSelector(state => state.movieList.list);
+    const isOutdated = useSelector(state => state.movieList.isOutdated);
 
-    if (filter) {
-        result = result.filter(item => item.genre === filter);
-    }
+    useEffect(() => {
+        if (filter && sort) {
+            callGetMovieList(filter, sort, dispatch);
+        }
+    }, [filter, sort, isOutdated, dispatch]);
 
-    if (sort) {
-        result.sort((a, b) => a[sort].localeCompare(b[sort]));
-    }
-
-    return result;
+    return (
+        <>
+            {movieList.map(item => (
+                <MovieListItem key={item.id} item={item}/>
+            ))}
+        </>
+    )
 }
 
-const mapStateToProps = state => ({
-    movieList: getList(state.movieList, state.sort.selectedValue, state.filter.selectedValue),
-});
-
-export default connect(mapStateToProps)(MovieList);
+export default MovieList;

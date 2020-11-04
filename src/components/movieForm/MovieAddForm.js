@@ -1,12 +1,13 @@
 import React from 'react';
 import {connect} from "react-redux";
-import {addMovieAction} from "../../actions";
 import MovieFormBase from "./MovieFormBase";
+import {callAddMovie} from "../../server/serverCalls";
 
 const MovieAddForm = ({dispatch}) => (
     <MovieFormBase
         title='Add Movie'
-        saveHandler={(item) => dispatch(addMovieAction(item))}/>
-)
+        saveHandler={(item) => callAddMovie(item, dispatch)}/>
+);
+
 
 export default connect()(MovieAddForm);
