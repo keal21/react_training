@@ -1,63 +1,99 @@
 import React, {useState} from 'react';
 import {connect} from "react-redux";
+import {Field, Form, Formik, useField} from "formik";
 import Popup from "../system/Popup";
 import styles from '../../css/styles.module.css';
 import {cancelEditMovieAction} from "../../actions/movieActions";
 
-const MovieFormBase = ({title, ...props}) => {
-    const [item, setItem] = useState({...props.source});
+const FormField = ({label, ...props}) => {
+    const [field, meta] = useField(props);
 
-    const reset = () => {
-        setItem({...props.source});
+    return (
+        <div>
+            <label>
+                {label}
+                <br/>
+                <Field {...field} {...props}/>
+            </label>
+            <br/>
+            {/*meta.touched &&*/ meta.error
+                ? <div className={styles.error}>{meta.error}</div>
+                : <br/>}
+            <br/>
+        </div>
+    );
+};
+
+const validate = (values) => {
+    const errors = {};
+
+    if (!values.title) {
+        errors.title = 'Field is required';
     }
 
-    const onChangeHandler = (e) => {
-        item[e.target.name] = e.target.value;
-        setItem({...item});
+    if (!values.releaseDate) {
+        errors.releaseDate = 'Field is required';
     }
 
-    const handleSubmit = () => {
-        props.saveHandler(item);
+    if (!values.url) {
+        errors.url = 'Field is required';
+    }
+
+    if (!values.genre) {
+        errors.genre = 'Field is required';
+    }
+
+    if (!values.overview) {
+        errors.overview = 'Field is required';
+    }
+
+    if (!values.runtime) {
+        errors.runtime = 'Field is required';
+    }
+
+    return errors;
+};
+
+const MovieFormBase = (props) => {
+    const [item] = useState(props.source);
+
+    const handleSubmit = (values) => {
+        props.saveHandler(values);
         props.cancelEditMovieAction();
     }
 
     return (
         <Popup>
-            <h3>{title}</h3>
+            <h3>{props.title}</h3>
 
-            <form onSubmit={handleSubmit}>
-                <span>Title</span><br/>
-                <input type="text" name="title" value={item.title} onChange={onChangeHandler}/><br/><br/>
+            <Formik
+                initialValues={item}
+                validate={validate}
+                onSubmit={values => handleSubmit(values)}>
 
-                <span>Release Date</span><br/>
-                <input type="text" name="releaseDate" value={item.releaseDate} onChange={onChangeHandler}/><br/><br/>
+                {({resetForm}) => (
+                    <Form>
+                        <FormField name="title" label='Title'/>
+                        <FormField name="releaseDate" label='Release Date'/>
+                        <FormField name="url" label='Url'/>
+                        <FormField name="genre" label='Genre'/>
+                        <FormField name="overview" label='Overview'/>
+                        <FormField name="runtime" label='Runtime'/>
 
-                <span>Url</span><br/>
-                <input type="text" name="url" value={item.url} onChange={onChangeHandler}/><br/><br/>
+                        <div>
+                            <button type='button' onClick={() => resetForm(props.source)}>Reset</button>
 
-                <span>Genre</span><br/>
-                <input type="text" name="genre" value={item.genre} onChange={onChangeHandler}/><br/><br/>
+                            <div className={styles.gap100}/>
 
-                <span>Overview</span><br/>
-                <input type="text" name="overview" value={item.overview} onChange={onChangeHandler}/><br/><br/>
+                            <button type='submit'>Submit</button>
 
-                <span>Runtime</span><br/>
-                <input type="text" name="runtime" value={item.runtime} onChange={onChangeHandler}/>
-            </form>
+                            <div className={styles.gap20}/>
 
-            <p/>
-
-            <div>
-                <button onClick={reset}>Reset</button>
-
-                <div className={styles.gap100}/>
-
-                <button onClick={handleSubmit}>Submit</button>
-
-                <div className={styles.gap20}/>
-
-                <button onClick={props.cancelEditMovieAction}>Cancel</button>
-            </div>
+                            <button type='button' onClick={props.cancelEditMovieAction}>Cancel</button>
+                        </div>
+                    </Form>
+                )}
+            </Formik>
         </Popup>
     )
 }
