@@ -9,32 +9,32 @@ export const START_EDIT_MOVIE = 'START_EDIT_MOVIE';
 export const CANCEL_EDIT_MOVIE = 'CANCEL_EDIT_MOVIE';
 
 export const fetchMovieListSuccessAction = (list) => ({
-    type: FETCH_MOVIE_LIST_SUCCESS,
-    list,
+  type: FETCH_MOVIE_LIST_SUCCESS,
+  list,
 });
 
 export const movieListIsOutdatedAction = () => ({
-    type: MOVIE_LIST_IS_OUTDATED,
+  type: MOVIE_LIST_IS_OUTDATED,
 });
 
 export const showMovieDetailsAction = (item) => ({
-    type: SHOW_MOVIE_DETAILS,
-    item,
-})
+  type: SHOW_MOVIE_DETAILS,
+  item,
+});
 
 export const closeMovieDetailsAction = () => ({
-    type: CLOSE_MOVIE_DETAILS,
-})
+  type: CLOSE_MOVIE_DETAILS,
+});
 
 export const startAddMovieAction = () => ({
-    type: START_ADD_MOVIE,
-})
+  type: START_ADD_MOVIE,
+});
 
 export const startEditMovieAction = (item) => ({
-    type: START_EDIT_MOVIE,
-    item,
-})
+  type: START_EDIT_MOVIE,
+  item,
+});
 
 export const cancelEditMovieAction = () => ({
-    type: CANCEL_EDIT_MOVIE,
-})
+  type: CANCEL_EDIT_MOVIE,
+});
