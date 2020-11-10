@@ -1,12 +1,14 @@
 import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {
   Field, Form, Formik, useField,
 } from 'formik';
+import { useHistory } from 'react-router-dom';
 import Popup from '../system/Popup';
 import styles from '../../css/styles.module.css';
 import { cancelEditMovieAction } from '../../actions/movieActions';
+import Movie from '../../types/movieType';
 
 const FormField = (props) => {
   const { name, label } = props;
@@ -65,15 +67,16 @@ const validate = (values) => {
   return errors;
 };
 
-const MovieFormBase = ({ title, saveHandler }) => {
+const MovieFormBase = ({ title, source, saveHandler }) => {
   const dispatch = useDispatch();
-  const source = useSelector((state) => state.movieEdit);
+  const history = useHistory();
 
   const [item] = useState(source);
 
   const cancelEditMovie = useCallback(() => {
     dispatch(cancelEditMovieAction());
-  }, [dispatch]);
+    history.push('/');
+  }, [dispatch, history]);
 
   const handleSubmit = useCallback((values) => {
     saveHandler(values);
@@ -119,6 +122,7 @@ const MovieFormBase = ({ title, saveHandler }) => {
 
 MovieFormBase.propTypes = {
   title: PropTypes.string.isRequired,
+  source: Movie.isRequired,
   saveHandler: PropTypes.func.isRequired,
 };
 

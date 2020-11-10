@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { Switch, Redirect, Route, useRouteMatch } from 'react-router-dom';
 import MovieList from './movieList/MovieList';
 import MovieAddForm from './movieForm/MovieAddForm';
 import MovieEditForm from './movieForm/MovieEditForm';
@@ -8,14 +8,16 @@ import Sort from './sort/Sort';
 import Filter from './filter/Filter';
 import styles from '../css/styles.module.css';
 import MovieAddButton from './movieList/MovieAddButton';
+import Search from './search/Search';
 
 const App = () => {
-  const isAddMovie = useSelector((state) => state.movieEdit && !state.movieEdit.id);
-  const isEditMovie = useSelector((state) => state.movieEdit && state.movieEdit.id);
-  const isMovieDetails = useSelector((state) => state.movieDetails);
+  const match = useRouteMatch('/search/:search');
+  const search = match && match.params.search;
 
   return (
     <>
+      <Search search={search} />
+
       <div>
         <MovieAddButton />
 
@@ -28,12 +30,24 @@ const App = () => {
         <Sort />
       </div>
 
-      <MovieList />
+      <MovieList search={search} />
 
-      {isAddMovie && <MovieAddForm />}
-      {isEditMovie && <MovieEditForm />}
-
-      {isMovieDetails && <MovieDetails />}
+      <Switch>
+        <Route path="/film/add" exact>
+          <MovieAddForm />
+        </Route>
+        <Route path="/film/edit/:id" exact>
+          <MovieEditForm />
+        </Route>
+        <Route path="/film/:id" exact>
+          <MovieDetails />
+        </Route>
+        <Route path="/search/:search" exact />
+        <Route path="/" exact />
+        <Route path="*">
+          <Redirect to="/404" />
+        </Route>
+      </Switch>
     </>
   );
 };

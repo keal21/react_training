@@ -1,8 +1,11 @@
-import { fetchMovieListSuccessAction, movieListIsOutdatedAction } from '../actions/movieActions';
+import {
+  fetchMovieListSuccessAction,
+  movieListIsOutdatedAction,
+} from '../actions/movieActions';
 import { fetchFiltersSuccessAction } from '../actions/filterActions';
 import { fetchSortsSuccessAction } from '../actions/sortActions';
 
-function call(action, item, filter, sort, dispatch, updateMovieList) {
+function call(action, item, filter, sort, dispatch, updateMovieList, search) {
   let url = `http://127.0.0.1:4000?action=${action}`;
 
   if (item) {
@@ -18,6 +21,10 @@ function call(action, item, filter, sort, dispatch, updateMovieList) {
 
   if (sort) {
     url = `${url}&sort=${sort}`;
+  }
+
+  if (search) {
+    url = `${url}&search=${search}`;
   }
 
   fetch(url)
@@ -47,8 +54,8 @@ export function getAllData(dispatch) {
   call('', null, null, null, dispatch);
 }
 
-export function callGetMovieList(filter, sort, dispatch) {
-  call('get', null, filter, sort, dispatch);
+export function callGetMovieList(filter, sort, dispatch, search) {
+  call('get', null, filter, sort, dispatch, false, search);
 }
 
 export function callAddMovie(item, dispatch) {
@@ -61,4 +68,16 @@ export function callEditMovie(item, dispatch) {
 
 export function callDeleteMovie(item, dispatch) {
   call('delete', item, null, null, dispatch, true);
+}
+
+export function callGetById(id) {
+  const url = `http://127.0.0.1:4000?action=getById&id=${id}`;
+
+  return fetch(url)
+    .then(async (source) => {
+      const res = await source.json();
+
+      return res.movie;
+    })
+    .catch((error) => console.log(error));
 }

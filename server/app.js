@@ -19,6 +19,7 @@ const server = http.createServer((req, res) => {
     console.log(JSON.stringify(query));
 
     let movieList;
+    let movie;
 
     // eslint-disable-next-line default-case
     switch (query.action) {
@@ -32,12 +33,16 @@ const server = http.createServer((req, res) => {
             deleteMovie(query);
             break;
         case 'get':
-            movieList = getMovieList(query.filter, query.sort);
+            movieList = getMovieList(query.filter, query.sort, query.search);
+            break;
+        case 'getById':
+            movie = getMovieList().filter((item) => item.id === query.id)[0];
             break;
     }
 
     const payload = {
         movieList: movieList,
+        movie: movie,
         filters: getFilters(),
         sorts: getSorts(),
     };

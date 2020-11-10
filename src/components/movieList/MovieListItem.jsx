@@ -1,20 +1,21 @@
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import styles from '../../css/styles.module.css';
 import { callDeleteMovie } from '../../server/serverCalls';
-import { showMovieDetailsAction, startEditMovieAction } from '../../actions/movieActions';
 import Movie from '../../types/movieType';
 
 const MovieListItem = ({ item }) => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const showDetailsHandler = useCallback(() => {
-    dispatch(showMovieDetailsAction(item));
-  }, [item, dispatch]);
+    history.push(`/film/${item.id}`);
+  }, [history, item.id]);
 
   const startEditMovieHandler = useCallback(() => {
-    dispatch(startEditMovieAction(item));
-  }, [item, dispatch]);
+    history.push(`/film/edit/${item.id}`);
+  }, [history, item.id]);
 
   const deleteMovieHandler = useCallback(() => {
     callDeleteMovie(item, dispatch);
@@ -45,6 +46,8 @@ const MovieListItem = ({ item }) => {
   );
 };
 
-MovieListItem.propTypes = Movie;
+MovieListItem.propTypes = {
+  item: Movie.isRequired,
+};
 
 export default MovieListItem;

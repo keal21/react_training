@@ -10,11 +10,16 @@ let movies = [
     {id: "" + nextMovieId++, title: 'MOVIE 5', overview: 'OVERVIEW 1', releaseDate: '2001', genre: 'COMEDY', runtime: 'RUNTIME 4', url: 'https://images-na.ssl-images-amazon.com/images/I/51NDT81AY7L._SX343_BO1,204,203,200_.jpg'},
 ];
 
-function getMovieList(filter, sort) {
+function getMovieList(filter, sort, search) {
     let result = movies.concat();
 
     if (filter && filter !== FILTER_ALL) {
         result = result.filter(item => item.genre === filter);
+    }
+
+    if (search) {
+        search = search.toLowerCase();
+        result = result.filter(item => item.title.toLowerCase().indexOf(search) !== -1);
     }
 
     if (sort) {

@@ -1,13 +1,12 @@
 import React, { useCallback } from 'react';
-import { useDispatch } from 'react-redux';
-import { startAddMovieAction } from '../../actions/movieActions';
+import { useHistory } from 'react-router-dom';
 
 const MovieAddButton = () => {
-  const dispatch = useDispatch();
+  const history = useHistory();
 
   const onClickHandler = useCallback(() => {
-    dispatch(startAddMovieAction());
-  }, [dispatch]);
+    history.push('/film/add');
+  }, [history]);
 
   return (
     <button type="button" onClick={onClickHandler}>Add Movie</button>

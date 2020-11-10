@@ -2,8 +2,9 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import MovieListItem from './MovieListItem';
 import { callGetMovieList } from '../../server/serverCalls';
+import NoMoviesFound from './NoMovieList';
 
-const MovieList = () => {
+const MovieList = ({search}) => {
   const dispatch = useDispatch();
 
   const filter = useSelector((state) => state.filter.selectedValue);
@@ -13,13 +14,17 @@ const MovieList = () => {
 
   useEffect(() => {
     if (filter && sort) {
-      callGetMovieList(filter, sort, dispatch);
+      callGetMovieList(filter, sort, dispatch, search);
     }
-  }, [filter, sort, isOutdated, dispatch]);
+  }, [filter, sort, isOutdated, dispatch, search]);
 
-  return movieList.map((item) => (
-    <MovieListItem key={item.id} item={item} />
-  ));
+  return (
+    <>
+      {movieList.length > 0 && movieList.map((item) => (
+        <MovieListItem key={item.id} item={item} />))}
+      {movieList.length === 0 && <NoMoviesFound />}
+    </>
+  );
 };
 
 export default MovieList;
