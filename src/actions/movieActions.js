@@ -26,10 +26,6 @@ export const closeMovieDetailsAction = () => ({
   type: CLOSE_MOVIE_DETAILS,
 });
 
-export const startAddMovieAction = () => ({
-  type: START_ADD_MOVIE,
-});
-
 export const startEditMovieAction = (item) => ({
   type: START_EDIT_MOVIE,
   item,

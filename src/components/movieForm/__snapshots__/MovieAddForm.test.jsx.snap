@@ -1,0 +1,152 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MovieAddForm snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="popupBackground"
+  >
+    <div
+      class="popup"
+    >
+      <div
+        class="popupContent"
+      >
+        <div>
+          <h3>
+            Add Movie
+          </h3>
+          <form
+            action="#"
+          >
+            <div>
+              <label
+                for="title"
+              >
+                Title
+                <br />
+              </label>
+              <input
+                id="title"
+                label="Title"
+                name="title"
+                value=""
+              />
+              <br />
+              <br />
+              <br />
+            </div>
+            <div>
+              <label
+                for="releaseDate"
+              >
+                Release Date
+                <br />
+              </label>
+              <input
+                id="releaseDate"
+                label="Release Date"
+                name="releaseDate"
+                value=""
+              />
+              <br />
+              <br />
+              <br />
+            </div>
+            <div>
+              <label
+                for="url"
+              >
+                Url
+                <br />
+              </label>
+              <input
+                id="url"
+                label="Url"
+                name="url"
+                value=""
+              />
+              <br />
+              <br />
+              <br />
+            </div>
+            <div>
+              <label
+                for="genre"
+              >
+                Genre
+                <br />
+              </label>
+              <input
+                id="genre"
+                label="Genre"
+                name="genre"
+                value=""
+              />
+              <br />
+              <br />
+              <br />
+            </div>
+            <div>
+              <label
+                for="overview"
+              >
+                Overview
+                <br />
+              </label>
+              <input
+                id="overview"
+                label="Overview"
+                name="overview"
+                value=""
+              />
+              <br />
+              <br />
+              <br />
+            </div>
+            <div>
+              <label
+                for="runtime"
+              >
+                Runtime
+                <br />
+              </label>
+              <input
+                id="runtime"
+                label="Runtime"
+                name="runtime"
+                value=""
+              />
+              <br />
+              <br />
+              <br />
+            </div>
+            <div>
+              <button
+                type="button"
+              >
+                Reset
+              </button>
+              <div
+                class="gap100"
+              />
+              <button
+                type="submit"
+              >
+                Submit
+              </button>
+              <div
+                class="gap20"
+              />
+              <button
+                type="button"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
