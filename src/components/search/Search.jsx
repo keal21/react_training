@@ -1,7 +1,10 @@
 import React, { useCallback, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useRouteMatch } from 'react-router-dom';
 
-const Search = ({currentSearch}) => {
+const Search = () => {
+  const match = useRouteMatch('/search/:search');
+  const currentSearch = match && match.params.search;
+
   const history = useHistory();
   const [newSearch, setNewSearch] = useState(currentSearch || '');
 
